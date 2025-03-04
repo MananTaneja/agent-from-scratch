@@ -1,5 +1,6 @@
 import 'dotenv/config'
-import { runLlm } from './src/llm'
+import { runLLM } from './src/llm'
+import { addMessage, getMessages } from './src/memory'
 
 const userMessage = process.argv[2]
 
@@ -8,5 +9,14 @@ if (!userMessage) {
   process.exit(1)
 }
 
-const response = await runLlm({ userMessage })
+await addMessage([{ role: 'user', content: userMessage }])
+
+const messages = await getMessages()
+
+const response = await runLLM({
+  messages
+})
+
 console.log(response)
+
+await addMessage([{ role: 'assistant', content: response }])
