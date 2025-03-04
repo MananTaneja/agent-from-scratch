@@ -1,6 +1,7 @@
 import 'dotenv/config'
-import { runLLM } from './src/llm'
-import { addMessage, getMessages } from './src/memory'
+import { z } from 'zod'
+import { runAgent } from './src/agent'
+import { addMessage } from './src/memory'
 
 const userMessage = process.argv[2]
 
@@ -9,14 +10,11 @@ if (!userMessage) {
   process.exit(1)
 }
 
-await addMessage([{ role: 'user', content: userMessage }])
+const weatherTools = {
+  name: 'get_weather',
+  parameters: z.object({})
+}
 
-const messages = await getMessages()
-
-const response = await runLLM({
-  messages
-})
-
+const response = await runAgent({ messages: [{ role: 'user', content: userMessage }], tools: [weatherTools] })
 console.log(response)
-
-await addMessage([{ role: 'assistant', content: response }])
+await addMessage(response)
