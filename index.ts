@@ -1,7 +1,6 @@
 import 'dotenv/config'
 import { z } from 'zod'
 import { runAgent } from './src/agent'
-import { addMessage } from './src/memory'
 
 const userMessage = process.argv[2]
 
@@ -15,5 +14,4 @@ const weatherTools = {
   parameters: z.object({})
 }
 
-const response = await runAgent({ messages: [{ role: 'user', content: userMessage }], tools: [weatherTools] })
-await addMessage(response)
+await runAgent({ messages: [{ role: 'user', content: userMessage }], tools: [weatherTools] })

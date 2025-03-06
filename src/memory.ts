@@ -1,6 +1,6 @@
 import { JSONFilePreset } from 'lowdb/node'
-import type { AIMessage, DbData, MessageWithMetadata } from '../types'
 import { v4 as uuid } from 'uuid'
+import type { AIMessage, DbData, MessageWithMetadata } from '../types'
 
 export const addMetadata = (message: AIMessage): MessageWithMetadata => {
     return {
