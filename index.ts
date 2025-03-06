@@ -16,5 +16,4 @@ const weatherTools = {
 }
 
 const response = await runAgent({ messages: [{ role: 'user', content: userMessage }], tools: [weatherTools] })
-console.log(response)
 await addMessage(response)
